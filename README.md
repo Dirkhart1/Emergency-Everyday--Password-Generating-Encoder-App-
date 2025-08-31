@@ -18,9 +18,18 @@ So I crafted a GUI that looks like you are doing activity of a hacker (the reaso
 So I hope you'll find use for this program! Happy Password-Creating !
 
 # How to run the program
-So the easiest and quickest way to run the program is to click on the folder the code is in and right click "main.py"
-and select "Open in Terminal".
-From there type " py main.py " and the program will run.
+So the easiest and quickest way to run the program is to right click on the folder the code is in and select "Open in Terminal".
+Then type "py main.py" and the program will run.
+
+However there is a chance the option might not show up. So instead:
+- Right click the folder the code is inside of
+- click "Copy as Path"
+- Open Terminal
+- type "cd" and then paste (CTRL + V), then remove the quotes (" ")
+- After that press Enter, you'll move in the file the code is in
+- Type "py main.py"
+
+And it should work
 
 # Hopes for the Future
 I plan to remake this program using a more updated and modern technology, as Tkinter is pretty dated, but this a good start.
