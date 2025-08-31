@@ -1,2 +1,37 @@
 # Password-Encoder-Generator
-A Program that helps you turn a simple easy-to-crack password into a far stronger password. Using only quick to remember infomation to generate a sophistcated password
+A Program that helps you turn a simple easy-to-crack password into a far stronger password. Using only quick to remember infomation to generate a sophistcated password.
+
+The intention of this program is guide you into creating a strong password while still making it easy to remember.
+All you need to remember is:
+- A password (with the help of this program, even "password123" could be considered strong)
+- A 3 digit number (could ressemble anything, an example could your birthmonth + day (412) (April (4) 12th (12))
+
+From there a new encoded password will be generated, and it should be exponentially more secured than the original entry.
+
+My intention is for this program to has pratical use for personal acitvity (or even professionally)
+so the password generation is spefically created for non-computer students. 
+However, a good password is always a good thing so everyone is welcomed to try the program.
+
+The GUI is created with non-computer focused people in mind.
+So I crafted a GUI that looks like you are doing activity of a hacker (the reason why the font and colors is the way it is).
+
+So I hope you'll find use for this program! Happy Password-Creating !
+
+# How to run the program
+So the easiest and quickest way to run the program is to click on the folder the code is in and right click "main.py"
+and select "Open in Terminal".
+From there type " py main.py " and the program will run.
+
+# Hopes for the Future
+I plan to remake this program using a more updated and modern technology, as Tkinter is pretty dated, but this a good start.
+
+While creating this I also had the idea of making a plugin for browsers that does the same thing, that way it will be far more convenient than going to your terminal and running the program from there.
+
+# Technology Used
+I wanted to make this program as efficient as possible so I only used:
+- Tkinter
+- Python
+
+# License
+
+This project is licensed under Alexis Rabago You are free to use, modify, and distribute the code as long as proper credit is given.
