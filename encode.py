@@ -1,4 +1,3 @@
-
 def encode1(letter):
   code = ""
   num = ord(letter)
@@ -43,4 +42,3 @@ def encode(password, pass1, pass2, pass3):
     number = number % 9
 
   return encoded_password
-
