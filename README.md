@@ -18,23 +18,15 @@ So I crafted a GUI that looks like you are doing activity of a hacker (the reaso
 So I hope you'll find use for this program! Happy Password-Creating !
 
 # How to run the program
-So the easiest and quickest way to run the program is to right click on the folder the code is in and select "Open in Terminal".
-Then type "py main.py" and the program will run.
+The easiest and quickest way to run the program is the right click the "main.pyw" file and select "Open With" and look for python.
+It will run the program from there.
 
-However there is a chance the option might not show up. So instead:
-- Right click the folder the code is inside of
-- click "Copy as Path"
-- Open Terminal
-- type "cd" and then paste (CTRL + V), then remove the quotes (" ")
-- After that press Enter, you'll move in the file the code is in
-- Type "py main.py"
-
-And it should work
+To promote convenience you can create a shortcut and place it on your desktop to easily access it at any time.
 
 # Hopes for the Future
-I plan to remake this program using a more updated and modern technology, as Tkinter is pretty dated, but this a good start.
+I plan to remake this program using a more updated and modern technology, as Tkinter is pretty dated, but the program as it is does the job exactly as needed.
 
-While creating this I also had the idea of making a plugin for browsers that does the same thing, that way it will be far more convenient than going to your terminal and running the program from there.
+While creating this I also had the idea of making a plugin for browsers that does the same thing. The idea being, either a widget that does the same thing, or have it where your password is being encoded in real time.
 
 # Technology Used
 I wanted to make this program as efficient as possible so I only used:
