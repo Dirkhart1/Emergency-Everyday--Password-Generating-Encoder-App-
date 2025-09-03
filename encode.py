@@ -1,3 +1,5 @@
+
+# Thes definitions are the ciphering method used to encode the password text
 def encode1(letter):
   code = ""
   num = ord(letter)
@@ -24,7 +26,7 @@ def encode(password, pass1, pass2, pass3):
   number = (pass1 * pass2 + pass3) % 9
 
   for letter in password:
-    # This loop allows the letter to be converted into ASCII, the code is carefully crafted for each ASCII int being beetwen 33 - 126
+    # This loop allows the letter to be converted into ASCII, the code is carefully crafted for each ASCII interger being beetwen 33 - 126
 
     # If number is = 0 6 or 3
     if number % 3 == 0 :
@@ -38,7 +40,8 @@ def encode(password, pass1, pass2, pass3):
     else:
       encoded_password += encode3(letter)
 
-    number += ((pass1 * pass2) + (pass2 * pass3) + (pass3 * pass1))
+    number += (pass1 * pass2) + (pass2 * pass3) + (pass3 * pass1)
+
     number = number % 9
 
   return encoded_password
