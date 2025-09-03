@@ -8,7 +8,7 @@ All you need to remember is:
 
 From there a new encoded password will be generated, and it should be exponentially more secured than the original entry.
 
-My intention is for this program to has pratical use for personal acitvity (or even professionally)
+My intention is for this program to has prcatical use for personal acitvity (or even professionally)
 so the password generation is created primarily with technical users in mind. 
 However, having a strong password is general good practice so everyone is welcomed to try the program.
 
@@ -29,8 +29,6 @@ If not of the method above works, then you might have to check if you have pytho
 I plan to remake this program using a more updated and modern technology, as Tkinter is pretty dated, but the program as it is does the job exactly as needed.
 
 While creating this I also had the idea of making a plugin for browsers that does the same thing. The idea being, either a widget that does the same thing, or have it where your password is being encoded in real time.
-
-Ultimately, the program is complete with all the features I believe would prove useful. So any future updates to this version of Emergency Everyday isn't likely to happen.
 
 # Technology Used
 - Tkinter
