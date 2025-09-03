@@ -8,7 +8,7 @@ All you need to remember is:
 
 From there a new encoded password will be generated, and it should be exponentially more secured than the original entry.
 
-My intention is for this program to has prcatical use for personal acitvity (or even professionally)
+My intention is for this program to has practical use for personal acitvity (or even professionally)
 so the password generation is created primarily with technical users in mind. 
 However, having a strong password is general good practice so everyone is welcomed to try the program.
 
