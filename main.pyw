@@ -16,7 +16,7 @@ class EmergencyEverydayApp(tk.Tk):
     x = (self.winfo_screenwidth()//2)-(500//2)
     y = (self.winfo_screenheight()//2)-(600//2)
     self.geometry("{}x{}+{}+{}".format(600, 500, x, y))
-    self.iconbitmap('EmergencyEverydayIcon.ico')
+    self.iconbitmap('assets/EmergencyEverydayIcon.ico')
 
     #Makes window fixed
     self.resizable(False, False)
@@ -346,4 +346,5 @@ class SavePage(tk.Frame):
     button1.grid(pady = 30)
 
 app = EmergencyEverydayApp()
+
 app.mainloop()
