@@ -1,11 +1,12 @@
 # What is Emergency Everyday?
-Emergency Everyday is a Program that helps you turn a simple easy-to-crack password into a far stronger password. Using only quick to remember infomation to generate a sophistcated password.
+Emergency Everyday is a Program that helps you turn a simple easy-to-crack password into a far stronger password. Using only simple infomation to generate a sophistcated password.
 
-The intention of this program is guide you into creating a strong password while still making it easy to remember.
-All you need to remember is:
+The intention of this program is guide you into creating a personalized strong passwords by putting in simple infomation.
+All you need to input is:
 - A password (with the help of this program, even "password123" could be considered strong)
 - A 3 digit number (could ressemble anything, an example could your birthmonth + day (412) (April (4) 12th (12))
-
+- A website the password will be connected too
+  
 From there a new encoded password will be generated, and it should be exponentially more secured than the original entry.
 
 My intention is for this program to has practical use for personal acitvity (or even professionally)
@@ -28,7 +29,9 @@ If not of the method above works, then you might have to check if you have pytho
 # Future Improvements
 I plan to remake this program using a more updated and modern technology, as Tkinter is pretty dated, but the program as it is does the job exactly as needed.
 
-While creating this I also had the idea of making a plugin for browsers that does the same thing. The idea being, either a widget that does the same thing, or have it where your password is being encoded in real time.
+- Improvement is planned on the way all the password infomation will be printed
+- Allow the user to choose a password set to delete
+- Better Interface design
 
 # Technology Used
 - Tkinter
