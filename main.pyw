@@ -1,10 +1,6 @@
 import tkinter as tk
-from tkinter import filedialog
-from tkinter import scrolledtext
 from encode import *
 from cryptography.fernet import Fernet
-
-vec = ["",""]
 
 class EmergencyEverydayApp(tk.Tk):
 
@@ -48,8 +44,6 @@ class EmergencyEverydayApp(tk.Tk):
 class Main_Page(tk.Frame):
   def __init__(self, parent, controller): 
     tk.Frame.__init__(self, parent)
-
-
 
     def switch1():
       if password_entry.config("show")[-1] == "*":          
@@ -267,7 +261,10 @@ class Help_Page(tk.Frame):
             "Longer Passwords are a higher priority for creating a good password.\n" \
             "But including those will still help make a more secure password"
             )
-    text = tk.Label(self, text=advice, anchor="center",font=("Cascadia Code", 10), bg="black", fg="#149414")
+    text = tk.Label(self, text=advice, anchor="center",
+                    font=("Cascadia Code", 10),
+                    bg="black", fg="#149414"
+                    )
     text.grid(row=1,pady=20, padx=20, )
  
     # This will allow navigation back to the main page
@@ -276,7 +273,8 @@ class Help_Page(tk.Frame):
                         fg="#149414", bg="black",
                         activebackground="#149414",
                         activeforeground="black",
-                        command = lambda : controller.show_frame(Main_Page))
+                        command = lambda : controller.show_frame(Main_Page)
+                        )
     button1.grid(row = 7, column = 0, sticky=tk.NS)
 
 class SavePage(tk.Frame):
@@ -284,22 +282,13 @@ class SavePage(tk.Frame):
     tk.Frame.__init__(self, parent)
     self.configure(bg="black")
 
-# Note --- MAKE IT WHERE EACH ENTRY IS A NEW LINE, IDEA:
-#                                                  1. (Name of site)
-#                                                  2. (Password)
-#                                                  3. (Name of site)
-#                                                  4. (Password)
-
-# so that we can print about 20 lines per page and if it passes 20 we create a new page which prints line 21 and more
-
-# MAKE IT WHERE WHENEVER WE SAVE TEXT ONTO THE FILE IT SAVES IT AS CIPHER TEXT, AND WHEN WE TRY TO READ IT HERE WE DECIPHER IT FOR IT TOO PRINT
     def open_file():
       # Read the encrypted data from the file
       with open('Storage/Secret_text.txt', 'rb') as f:
           text_widget.configure(state ='normal')
           key = load_key()
           key = Fernet(key)            
-          # - - - - - - with open("test.txt", "r") as file:
+          vec = ["",""]
           lines = f.readlines()
           i = 0
           text_widget.delete(1.0, tk.END)            
@@ -322,19 +311,19 @@ class SavePage(tk.Frame):
 
     bottom_frame = tk.Frame(self,padx=20, pady=20, bg="black")
     bottom_frame.pack()
-
-    # test scrolledtext.ScrolledText  
+ 
     text_widget = tk.Text(form_frame, wrap="word", 
-                                            font=("Cascadia Code", 12),
-                                            width=40, height=10,
-                                            bg="black", fg="#149414",
-                                            state="disabled"
-                                           )
+                          font=("Cascadia Code", 12),
+                          width=40, height=10,
+                          bg="black", fg="#149414",
+                          state="disabled"
+                          )
     text_widget.pack()
 
     open_button = tk.Button(bottom_frame, text="Open File",
                             font=("Cascadia Code", 12), bg="black",
-                            fg="#149414", command=open_file)
+                            fg="#149414", command=open_file
+                            )
     open_button.grid(pady = 30)
 
     button1 = tk.Button(bottom_frame, text ="Back",
@@ -342,9 +331,9 @@ class SavePage(tk.Frame):
                         fg="#149414", bg="black",
                         activebackground="#149414",
                         activeforeground="black",
-                        command = lambda : controller.show_frame(Main_Page))
+                        command = lambda : controller.show_frame(Main_Page)
+                        )
     button1.grid(pady = 30)
 
 app = EmergencyEverydayApp()
-
 app.mainloop()
