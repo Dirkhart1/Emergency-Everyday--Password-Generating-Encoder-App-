@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import scrolledtext
 from encode import *
+from cryptography.fernet import Fernet
 
+vec = ["",""]
 
 class EmergencyEverydayApp(tk.Tk):
 
@@ -13,7 +16,7 @@ class EmergencyEverydayApp(tk.Tk):
     x = (self.winfo_screenwidth()//2)-(500//2)
     y = (self.winfo_screenheight()//2)-(600//2)
     self.geometry("{}x{}+{}+{}".format(600, 500, x, y))
-    self.iconbitmap('assets/EmergencyEverydayIcon.ico')
+    self.iconbitmap('EmergencyEverydayIcon.ico')
 
     #Makes window fixed
     self.resizable(False, False)
@@ -30,7 +33,7 @@ class EmergencyEverydayApp(tk.Tk):
     self.frames = {}
 
     # Adds pages to the container
-    for F in (Main_Page, Help_Page):
+    for F in (Main_Page, Help_Page, SavePage):
       frame = F(container, self)
       self.frames[F] = frame
       frame.grid(row = 0, column = 0, sticky ="nsew")
@@ -45,7 +48,9 @@ class EmergencyEverydayApp(tk.Tk):
 class Main_Page(tk.Frame):
   def __init__(self, parent, controller): 
     tk.Frame.__init__(self, parent)
-    
+
+
+
     def switch1():
       if password_entry.config("show")[-1] == "*":          
           password_entry.configure(show="")
@@ -70,7 +75,6 @@ class Main_Page(tk.Frame):
         encoded_entry.configure(show="*")
         show_encoded_pass.config(text="Show")
         
-        
     def number_codes():
       password = password_entry.get()
       code = encrypter_digits.get()
@@ -83,14 +87,30 @@ class Main_Page(tk.Frame):
       temp = encode(password, num1, num2, num3)
       encoded_password.set(temp)
 
-    # This allows you to save the password onto a text file
-    def save_file():
-        file_path = filedialog.asksaveasfilename(defaultextension=".txt",
-                                                filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
-        if file_path:
-            text_content = encoded_password.get()
-            with open(file_path, "w") as file:
-                file.write(text_content)
+    def store_input():
+      # open the file in read mode/byte mode 
+      k= open('storage/filekey.key', 'rb')
+      # read first character to see if file is empty
+      first_char = k.read(1)
+      if not first_char:
+        k.close()
+        key = Fernet.generate_key()
+        with open('storage/filekey.key', 'wb') as key_file:
+          key_file.write(key)
+      else:
+          k.close()
+
+      # Load the key
+      key = load_key()
+      key = Fernet(key)
+      # THIS WORKS TO ENCODE STRING INTO BINARY
+      e = encoded_password.get()
+      w = website_entry.get()
+      e= f'{e}'.encode()
+      w= f'{w}'.encode()
+      with open('storage/Secret_text.txt', 'ab') as f:
+        f.write(key.encrypt(w) + b"\n")
+        f.write(key.encrypt(e) + b"\n")
 
     # This ensures that a the number codes are ONLY numbers
     # This program is created with ONLY 3 number digits in mind
@@ -113,6 +133,8 @@ class Main_Page(tk.Frame):
     form_frame = tk.Frame(self, padx=20, pady=0, bg="black")
     form_frame.pack()
 
+    bottom_frame = tk.Frame(self,padx=20, pady=0, bg="black")
+    bottom_frame.pack()
     # Add Widgets to header frames
     header_label = tk.Label(header_frame, text="Emergency Everyday",
                             font=("Cascadia Code", 24),
@@ -140,9 +162,9 @@ class Main_Page(tk.Frame):
 
     # number codes
     num1_code_label = tk.Label(form_frame, 
-                              text="Encrypter (3 digits) : ",
-                              font=("Cascadia Code", 12),
-                              fg="#149414", bg="black")
+                               text="Encrypter (3 digits) : ",
+                               font=("Cascadia Code", 12),
+                               fg="#149414", bg="black")
     num1_code_label.grid(row=1, column=0, pady=20)
 
     encrypter_digits = tk.Entry(form_frame, validate="key", show="*",
@@ -158,16 +180,21 @@ class Main_Page(tk.Frame):
                                      width=5, height=1)
     show_encrpter_digits.grid(row=1, column=3, padx=10)
 
-    # This adds a button which returns the encoded password
-    Generate_button = tk.Button(form_frame, text="Encode", command=number_codes,
-                                font=("Cascadia Code", 12), fg="#149414", bg="black",
-                                activebackground="#149414", activeforeground="black")
-    Generate_button.grid(row=2,column=1, pady=20,)
+    website_label = tk.Label(form_frame, text="Website : ",
+                             font=("Cascadia Code", 12),
+                             fg="#149414", bg="black")
+    website_label.grid(row=2, column=0,pady=20, sticky=tk.E)
+
+
+    website_entry = tk.Entry(form_frame,
+                             font=("Cascadia Code", 12),
+                             fg="#149414", bg="black")
+    website_entry.grid(row=2, column=1, ipady=3, ipadx=30, sticky=tk.W)
+
+    encoded_password = tk.StringVar()
 
     # This sets up the section where the encoded password will print\
     # while you are able to type in it, it will be overwritten when the encode button is pressed
-    encoded_password = tk.StringVar()
-
     encoded_label = tk.Label(form_frame,
                             text="Encoded Password : ",
                             font=("Cascadia Code", 12),
@@ -177,7 +204,8 @@ class Main_Page(tk.Frame):
     encoded_entry = tk.Entry(form_frame, show="*",
                             textvariable=encoded_password,
                             font=("Cascadia Code", 12),
-                            fg="#149414", bg="black")
+                            fg="#149414", bg="black",
+                            )
     encoded_entry.grid(row=3, column=1, ipady=3, pady=20, ipadx=30)
 
     show_encoded_pass = tk.Button(form_frame, text="Show",
@@ -187,21 +215,36 @@ class Main_Page(tk.Frame):
                                   width=5, height=1)
     show_encoded_pass.grid(row=3, column=3, padx=10)
 
-    # This creates a SAVE button to store your password into a text file
-    Help_Button = tk.Button(form_frame, text="Help",
+    # ALL BELOW ARE BUTTONS
+    # This adds a button which returns the encoded password
+    Generate_button = tk.Button(bottom_frame, text="Encode", command=number_codes,
+                                font=("Cascadia Code", 12), fg="#149414", bg="black",
+                                activebackground="#149414", activeforeground="black")
+    Generate_button.grid(row=2,column=1, pady=0,)
+    Help_Button = tk.Button(bottom_frame, text="Help",
                             font=("Cascadia Code", 12),
                             fg="#149414", bg="black",
                             activebackground="#149414",
                             activeforeground="black",
                             command = lambda : controller.show_frame(Help_Page))
-    Help_Button.grid(row=4, column=0, pady=20)
-    Save_Button = tk.Button(form_frame, text="Save", 
-                            command=save_file,
+    Help_Button.grid(row=4, column=0, pady=20, padx=50)
+
+    # This creates a SAVE button to store your password into a text file
+    Save_Button = tk.Button(bottom_frame, text="Save", 
+                            command=store_input,
                             font=("Cascadia Code", 12),
                             fg="#149414", bg="black",
                             activebackground="#149414",
                             activeforeground="black")
-    Save_Button.grid(row=4,column=1, pady=20)
+    Save_Button.grid(row=4,column=1, pady=20, padx=50)
+
+    Store_button = tk.Button(bottom_frame, text="List", 
+                             command=lambda : controller.show_frame(SavePage),
+                             font=("Cascadia Code", 12),
+                             fg="#149414", bg="black",
+                             activebackground="#149414",
+                             activeforeground="black")
+    Store_button.grid(row=4,column=4, pady=20, padx=50)
 
 class Help_Page(tk.Frame):
   def __init__(self, parent, controller):        
@@ -236,6 +279,71 @@ class Help_Page(tk.Frame):
                         command = lambda : controller.show_frame(Main_Page))
     button1.grid(row = 7, column = 0, sticky=tk.NS)
 
-app = EmergencyEverydayApp()
+class SavePage(tk.Frame):
+  def __init__(self, parent, controller):        
+    tk.Frame.__init__(self, parent)
+    self.configure(bg="black")
 
+# Note --- MAKE IT WHERE EACH ENTRY IS A NEW LINE, IDEA:
+#                                                  1. (Name of site)
+#                                                  2. (Password)
+#                                                  3. (Name of site)
+#                                                  4. (Password)
+
+# so that we can print about 20 lines per page and if it passes 20 we create a new page which prints line 21 and more
+
+# MAKE IT WHERE WHENEVER WE SAVE TEXT ONTO THE FILE IT SAVES IT AS CIPHER TEXT, AND WHEN WE TRY TO READ IT HERE WE DECIPHER IT FOR IT TOO PRINT
+    def open_file():
+      # Read the encrypted data from the file
+      with open('Storage/Secret_text.txt', 'rb') as f:
+          text_widget.configure(state ='normal')
+          key = load_key()
+          key = Fernet(key)            
+          # - - - - - - with open("test.txt", "r") as file:
+          lines = f.readlines()
+          i = 0
+          text_widget.delete(1.0, tk.END)            
+          for line in lines:
+            word = key.decrypt(line)
+            print(word)
+            if i == 1:
+              vec[1] = word.decode()
+              text_widget.insert(tk.END, vec[0] + " : " + vec[1] +'\n')
+              i = 0
+            else:
+              vec[0] = word.decode()
+              i +=1
+          text_widget.tag_configure("center", justify="center")
+          text_widget.tag_add("center", "1.0", "end")
+          text_widget.configure(state ='disabled')
+            
+    form_frame = tk.Frame(self, padx=20, pady=20, bg="black")
+    form_frame.pack()
+
+    bottom_frame = tk.Frame(self,padx=20, pady=20, bg="black")
+    bottom_frame.pack()
+
+    # test scrolledtext.ScrolledText  
+    text_widget = tk.Text(form_frame, wrap="word", 
+                                            font=("Cascadia Code", 12),
+                                            width=40, height=10,
+                                            bg="black", fg="#149414",
+                                            state="disabled"
+                                           )
+    text_widget.pack()
+
+    open_button = tk.Button(bottom_frame, text="Open File",
+                            font=("Cascadia Code", 12), bg="black",
+                            fg="#149414", command=open_file)
+    open_button.grid(pady = 30)
+
+    button1 = tk.Button(bottom_frame, text ="Back",
+                        font=("Cascadia Code", 12),
+                        fg="#149414", bg="black",
+                        activebackground="#149414",
+                        activeforeground="black",
+                        command = lambda : controller.show_frame(Main_Page))
+    button1.grid(pady = 30)
+
+app = EmergencyEverydayApp()
 app.mainloop()
