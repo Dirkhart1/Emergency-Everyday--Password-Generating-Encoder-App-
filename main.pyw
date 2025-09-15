@@ -108,7 +108,7 @@ class Main_Page(tk.Frame):
 
     # This ensures that a the number codes are ONLY numbers
     # This program is created with ONLY 3 number digits in mind
-    # modifing this to allow more wouldn't break the code, but after 3 digits the extra numbers would only hang around
+    # If you like to add or reduce digits then you'll have to modify the input in the encode.py file
     def validate_input(value):
         if len(value) > 3:
           return False
@@ -277,16 +277,7 @@ class SavePage(tk.Frame):
   def __init__(self, parent, controller):        
     tk.Frame.__init__(self, parent)
     self.configure(bg="black")
-
-# Note --- MAKE IT WHERE EACH ENTRY IS A NEW LINE, IDEA:
-#                                                  1. (Name of site)
-#                                                  2. (Password)
-#                                                  3. (Name of site)
-#                                                  4. (Password)
-
-# so that we can print about 20 lines per page and if it passes 20 we create a new page which prints line 21 and more
-
-# MAKE IT WHERE WHENEVER WE SAVE TEXT ONTO THE FILE IT SAVES IT AS CIPHER TEXT, AND WHEN WE TRY TO READ IT HERE WE DECIPHER IT FOR IT TOO PRINT
+    
     def open_file():
       # Read the encrypted data from the file
       with open('Storage/Secret_text.txt', 'rb') as f:
@@ -340,4 +331,5 @@ class SavePage(tk.Frame):
     button1.grid(pady = 30)
 
 app = EmergencyEverydayApp()
+
 app.mainloop()
