@@ -17,7 +17,7 @@ def load_key():
 def encoding(lex, num):
   code = ""
   a = ord(lex)
-  # This allows the letter to be converted into ASCII, the code is carefully crafted for each ASCII interger being beetwen 33 - 126
+  # This allows the letter to be converted into ASCII
   # If number is = 0 6 or 3
   if num % 3 == 0 :
     a = (int(a) % 33) + 33
